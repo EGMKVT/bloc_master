@@ -1,7 +1,3 @@
-# bloc_login
-
-The idea is to use the DRF to create APIs which can be called by the flutter application. Most of the tutorials I have seen only talk about doing it with Firebase. Since we already will be using PostgreSQL for the Django, let us use that as our server DB and using SQLite with the Flutter Application to store just the Auth token and Username.
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
