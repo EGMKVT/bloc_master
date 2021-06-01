@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login | Home Hub'),
+        title: Text('Authentication'),
       ),
       body: BlocProvider(
         create: (context) {

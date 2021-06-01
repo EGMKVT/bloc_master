@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_login/login/bloc/login_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -50,6 +55,16 @@ class _LoginFormState extends State<LoginForm> {
                       controller: _passwordController,
                       obscureText: true,
                     ),
+                    GestureDetector(
+                      child: Container(
+                          alignment: Alignment.center,
+                          child: Text("Register",
+                              style: TextStyle(fontSize: 20, color: Colors.white))),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => FormPage()));
+                      },
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.85,
                       height: MediaQuery.of(context).size.width * 0.22,
@@ -87,5 +102,136 @@ class _LoginFormState extends State<LoginForm> {
         },
       ),
     );
+  }
+}
+
+class FormPage extends StatefulWidget {
+  @override
+  _FormPageState createState() => _FormPageState();
+}
+class _FormPageState extends State<FormPage> {
+  TextEditingController _username = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 70,
+                  child: Image.network("https://protocoderspoint.com/wp-content/uploads/2020/10/PROTO-CODERS-POINT-LOGO-water-mark-.png"),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom:15,left: 10,right: 10),
+                  child: TextFormField(
+                    controller: _username,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        labelText: 'Username', icon: Icon(Icons.person)),
+                    validator: (String value){
+                      if(value.isEmpty)
+                      {
+                        return "Please enter name";
+                      }
+                      return null;
+                    },
+                    onSaved: (String usernamename){
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15,left: 10,right: 10),
+                  child: TextFormField(
+                    controller: _email,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        labelText: 'Email', icon: Icon(Icons.email)),
+                    validator: (String value){
+                      if(value.isEmpty)
+                      {
+                        return "Please enter  email";
+                      }
+                      if(!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value))
+                      {
+                        return "Please enter valid email";
+                      }
+                      return null;
+                    },
+                    onSaved: (String email){
+                    },
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15,left: 10,right: 10),
+                  child: TextFormField(
+                    controller: _password,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        labelText: 'Password', icon: Icon(Icons.lock)),
+                    validator: (String value){
+                      if(value.isEmpty)
+                      {
+                        return "Please enter password";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 200,
+                  height: 50,
+                  // ignore: deprecated_member_use
+                  child: RaisedButton(
+                    color: Colors.redAccent,
+                    onPressed: (){
+                      if(_formkey.currentState.validate())
+                      {
+                        RegistrationUser();
+                        print("Successful");
+                      }else
+                      {
+                        print("Unsuccessfull");
+                      }
+
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        side: BorderSide(color: Colors.blue,width: 2)
+                    ),
+                    textColor:Colors.white,child: Text("Submit"),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  Future RegistrationUser()  async{
+    // url to registration php script
+    String apiUrl = "http://10.0.30.157:8000/account/register/";
+
+    final json ={
+      'username':_username.text,
+      'email':_email.text,
+      'password':_password.text
+    };
+
+    http.Response reponse = await http.post(apiUrl,body: json );
+
+    var data = jsonDecode(reponse.body);
+    print(data);
   }
 }
