@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:bloc_login/model/api_model.dart';
 
 final _base = "http://10.0.30.157:8000";
-final _tokenEndpoint = "/api/token/";
+final _tokenEndpoint = "/api-token-auth/";
 final _tokenURL = _base + _tokenEndpoint;
 
 Future<Token> getToken(UserLogin userLogin) async {

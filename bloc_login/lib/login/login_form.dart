@@ -51,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(
-                          labelText: 'password', icon: Icon(Icons.security)),
+                          labelText: 'password', icon: Icon(Icons.lock)),
                       controller: _passwordController,
                       obscureText: true,
                     ),
@@ -145,7 +145,7 @@ class _FormPageState extends State<FormPage> {
                       }
                       return null;
                     },
-                    onSaved: (String usernamename){
+                    onSaved: (String username){
                     },
                   ),
                 ),
@@ -176,6 +176,7 @@ class _FormPageState extends State<FormPage> {
                   padding: const EdgeInsets.only(bottom: 15,left: 10,right: 10),
                   child: TextFormField(
                     controller: _password,
+                    obscureText: true,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         labelText: 'Password', icon: Icon(Icons.lock)),
