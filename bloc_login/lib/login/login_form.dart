@@ -222,7 +222,7 @@ class _FormPageState extends State<FormPage> {
   }
   Future RegistrationUser()  async{
     // url to registration php script
-    String apiUrl = "http://10.0.30.157:8000/account/register/";
+    String apiUrl = "http://10.0.10.49:8000/account/register/";
 
     final json ={
       'username':_username.text,
