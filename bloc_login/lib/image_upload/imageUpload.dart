@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:bloc_login/model/api_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -18,10 +17,10 @@ class UserInfoEdit extends StatefulWidget {
 }
 
 class _UserInfoEditState extends State<UserInfoEdit> {
-
   File _image;
   TextEditingController cTitle = new TextEditingController();
   TextEditingController cText = new TextEditingController();
+
 
   Future getImageGallery() async{
     var imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -63,8 +62,8 @@ class _UserInfoEditState extends State<UserInfoEdit> {
   //   });
   // }
 
-  Future upload(File imageFile) async{
-    Map<String, String> headers = {HttpHeaders.authorizationHeader: "Token",};
+  Future upload(File imageFile) async {
+    Map<String, String> headers = {HttpHeaders.authorizationHeader: "Token b93b4cd7480a6b2313700a547f73f4eedd7fef01",};
     var stream= new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length= await imageFile.length();
     var uri = Uri.parse('http://10.0.10.49:8000/account/api/NFT/',);
